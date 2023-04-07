@@ -53,7 +53,7 @@ insert(_ContainerType &container,
     duration dur(0);
     
     for (int i = 0; i < order.size(); i++) {
-        __clflush_range<_DataType, _Container>(container);
+        clflush_container<_DataType, _Container>(container);
         START_TIMER
         __insert_<_DataType, _Container>(container, order, i);
         END_TIMER
@@ -91,7 +91,7 @@ push_back(_ContainerType &container,
     duration dur(0);
     
     for (int i = 0; i < iteration_value; i++) {
-        __clflush_range<_DataType, _Container>(container);
+        clflush_container<_DataType, _Container>(container);
         START_TIMER
         __push_back<_DataType, _Container>(container, i);
         END_TIMER
@@ -142,7 +142,7 @@ push_front(_ContainerType &container,
     duration dur(0);
     
     for (int i = 0; i < iteration_value; i++) {
-        __clflush_range<_DataType, _Container>(container);
+        clflush_container<_DataType, _Container>(container);
         START_TIMER
         __push_front<_DataType, _Container>(container, i);
         END_TIMER
@@ -215,7 +215,7 @@ find(const _ContainerType &container,
     duration dur(0);
     
     for (int i = 0; i < idx.size(); i++) {
-        __clflush_range<_DataType, _Container>(container);
+        clflush_container<_DataType, _Container>(container);
         START_TIMER
         iters.push_back(__find_<_DataType, _Container>(container, idx[i]));
         END_TIMER
@@ -299,7 +299,7 @@ template <
 >
 duration
 iteration(_ContainerType &container) {
-    __clflush_range<_DataType, _Container>(container);
+    clflush_container<_DataType, _Container>(container);
     START_TIMER
     std::size_t sum = 0;
     __iteration_<_DataType, _Container>(container, sum);

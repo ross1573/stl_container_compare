@@ -54,7 +54,7 @@ measure(std::size_t iteration, duration_map &times)
     dur = insert<_DataType, _Container>(container, random_vec);
     times["insert"].push_back(dur);
     
-    random_vec = random(iteration / 100);
+    random_vec = random(iteration / 10);
     dur = find<_DataType, _Container>(container, random_vec);
     times["find"].push_back(dur);
 

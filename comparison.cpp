@@ -12,7 +12,7 @@ int main() {
         node_large,
         node_extreme>();
 
-    static constexpr std::size_t iteration = 500;
+    static constexpr std::size_t iteration = 20000;
     auto data_type = get_data_types<
         node_int64,
         node_small,
@@ -68,10 +68,10 @@ int main() {
         node_extreme*
     >(iteration);
     
-//    print(vector_dur, data_type, "VECTOR");
-//    print(list_dur, data_type, "LIST");
-//    print(map_dur, data_type, "MAP");
-//    print(hash_map_dur, data_type, "HASH MAP");
+    print(vector_dur, data_type, "VECTOR");
+    print(list_dur, data_type, "LIST");
+    print(map_dur, data_type, "MAP");
+    print(hash_map_dur, data_type, "HASH MAP");
     
     std::stringstream identifier;
     identifier
