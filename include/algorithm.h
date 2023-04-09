@@ -21,8 +21,8 @@ __insert_(_ContainerType &container,
           const std::vector<std::size_t> &order,
           const std::size_t idx)
 {
-    container.insert(std::next(container.begin(), order[idx]),
-                     create_instance<_DataType>(idx));
+    container.emplace(std::next(container.begin(), order[idx]),
+                      create_instance<_DataType>(idx));
 }
 
 template <
@@ -36,7 +36,7 @@ __insert_(_ContainerType &container,
           const std::vector<std::size_t> &order,
           const std::size_t idx)
 {
-    container.insert({idx, create_instance<_DataType>(idx)});
+    container.emplace(idx, create_instance<_DataType>(idx));
 }
 
 
@@ -75,7 +75,7 @@ inline void
 __push_back(_ContainerType &container,
             const std::size_t idx)
 {
-    container.push_back(create_instance<_DataType>(idx));
+    container.emplace_back(create_instance<_DataType>(idx));
 }
 
 template <
@@ -113,7 +113,7 @@ inline void
 __push_front(_ContainerType &container,
              const std::size_t idx)
 {
-    container.push_front(create_instance<_DataType>(idx));
+    container.emplace_front(create_instance<_DataType>(idx));
 }
 
 template <
@@ -126,7 +126,7 @@ inline void
 __push_front(_ContainerType &container,
              const std::size_t idx)
 {
-    container.insert(container.begin(), create_instance<_DataType>(idx));
+    container.emplace(container.begin(), create_instance<_DataType>(idx));
 }
 
 template <
@@ -217,8 +217,9 @@ find(const _ContainerType &container,
     for (int i = 0; i < idx.size(); i++) {
         clflush_container<_DataType, _Container>(container);
         START_TIMER
-        iters.push_back(__find_<_DataType, _Container>(container, idx[i]));
+        auto iter = __find_<_DataType, _Container>(container, idx[i]);
         END_TIMER
+        iters.emplace_back(iter);
         dur += DURATION
     }
     
@@ -234,7 +235,7 @@ template <
     class _ContainerType = container_type_t<_DataType, _Container>
 >
 inline void
-__iteration_(_ContainerType &container,
+__iteration_(const _ContainerType &container,
              std::size_t &sum) {
     std::for_each(container.begin(),
                 container.end(),
@@ -250,7 +251,7 @@ template <
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires (!std::is_pointer_v<_DataType> && map_like<_DataType, _Container>)
 inline void
-__iteration_(_ContainerType &container,
+__iteration_(const _ContainerType &container,
              std::size_t &sum) {
     std::for_each(container.begin(),
                 container.end(),
@@ -266,7 +267,7 @@ template <
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires (std::is_pointer_v<_DataType> && !map_like<_DataType, _Container>)
 inline void
-__iteration_(_ContainerType &container,
+__iteration_(const _ContainerType &container,
              std::size_t &sum) {
     std::for_each(container.begin(),
                 container.end(),
@@ -282,7 +283,7 @@ template <
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires (std::is_pointer_v<_DataType> && map_like<_DataType, _Container>)
 inline void
-__iteration_(_ContainerType &container,
+__iteration_(const _ContainerType &container,
              std::size_t &sum) {
     std::for_each(container.begin(),
                 container.end(),
@@ -298,10 +299,10 @@ template <
     class _ContainerType = container_type_t<_DataType, _Container>
 >
 duration
-iteration(_ContainerType &container) {
+iteration(const _ContainerType &container) {
     clflush_container<_DataType, _Container>(container);
-    START_TIMER
     std::size_t sum = 0;
+    START_TIMER
     __iteration_<_DataType, _Container>(container, sum);
     END_TIMER
     VALIDATE("iteration", sum);
