@@ -11,6 +11,6 @@ RAM: 64GB
 ~~~
 -----
 ## Results  
-<img src="./result/graph/insert_20000.png" >width="10px" height="8px"/>  
-<img src="./result/graph/search_20000.png" >width="10px" height="8px"/>  
-<img src="./result/graph/iteration_20000.png" >width="100px" height="80px">  
+<img src="./result/graph/insert_20000.png" width="500px" height="400px"/>  
+<img src="./result/graph/search_20000.png" width="500px" height="400px"/>  
+<img src="./result/graph/iteration_20000.png" width="500px" height="400px">  
