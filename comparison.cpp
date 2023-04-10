@@ -12,7 +12,7 @@ int main() {
         node_large,
         node_extreme>();
 
-    static constexpr std::size_t iteration = 20000;
+    static constexpr std::size_t iteration = 50;
     auto data_type = get_data_types<
         node_int64,
         node_small,
@@ -25,7 +25,7 @@ int main() {
     >();
 
     duration_map vector_dur, map_dur, hash_map_dur;
-    static constexpr std::size_t loop = 1;
+    static constexpr std::size_t loop = 3;
     
     for (std::size_t i = 0; i < loop; i++)
         vector_dur = measure<std::vector,

@@ -13,6 +13,7 @@
 #include <map>
 #include <chrono>
 #include <x86intrin.h>
+#include <cstdint>
 
 
 #ifdef __USE_CHRONO_TIMER
@@ -28,14 +29,14 @@
     #define END_TIMER           time_point end_time = timer::now();
     #define DURATION            end_time - start_time;
 #else
-    typedef unsigned long long                              time_point;
-    typedef unsigned long long                              duration;
+    typedef uint64_t                                        time_point;
+    typedef uint64_t                                        duration;
 
     typedef std::vector<duration>                           duration_vec;
     typedef std::unordered_map<std::string, duration_vec>   duration_map;
 
-    #define START_TIMER         time_point start_time = __rdtsc();
-    #define END_TIMER           time_point end_time = __rdtsc();
+    #define START_TIMER         volatile time_point start_time = __rdtsc();
+    #define END_TIMER           volatile time_point end_time = __rdtsc();
     #define DURATION            end_time - start_time;
 #endif
 

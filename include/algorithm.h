@@ -51,6 +51,7 @@ insert(_ContainerType &container,
        const std::vector<std::size_t> &order)
 {
     duration dur(0);
+    container = _ContainerType();
     
     for (int i = 0; i < order.size(); i++) {
         clflush_container<_DataType, _Container>(container);
@@ -89,6 +90,7 @@ push_back(_ContainerType &container,
           const std::size_t iteration_value)
 {
     duration dur(0);
+    container = _ContainerType();
     
     for (int i = 0; i < iteration_value; i++) {
         clflush_container<_DataType, _Container>(container);
@@ -140,6 +142,7 @@ push_front(_ContainerType &container,
            const std::size_t iteration_value)
 {
     duration dur(0);
+    container = _ContainerType();
     
     for (int i = 0; i < iteration_value; i++) {
         clflush_container<_DataType, _Container>(container);

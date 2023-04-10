@@ -1,0 +1,4 @@
+function,int64,small,medium,large,extreme,ptr_8,ptr_40,ptr_248
+iteration,564,586,558,556,646,668,762,522
+find,80,168,196,84,148,80,84,122
+insert,5470,5246,5954,6190,10882,8210,8802,14220

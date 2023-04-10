@@ -19,15 +19,6 @@ measure(std::size_t iteration, duration_map &times)
     
     dur = push_back<_DataType, _Container>(container, iteration);
     times["push_back"].push_back(dur);
-//    container.clear();
-    
-//    dur = push_front<_DataType, _Container>(container, iteration);
-//    times["push_front"].push_back(dur);
-//    container.clear();
-    
-//    random_vec = random_range(iteration);
-//    dur = insert<_DataType, _Container>(container, random_vec);
-//    times["insert"].push_back(dur);
     
     random_vec = random(iteration / 10);
     dur = find<_DataType, _Container>(container, random_vec);
