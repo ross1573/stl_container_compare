@@ -18,6 +18,7 @@ clflush_container(const _ContainerType &container) {}
 template <
     typename _DataType
 >
+[[clang::always_inline]]
 inline void
 __clflush_range(const _DataType &begin,
                 const std::size_t &count) {
@@ -36,6 +37,7 @@ __clflush_range(const _DataType &begin,
 template <
     typename _DataType
 >
+[[clang::always_inline]]
 inline void
 __clflush_(const _DataType &data) {
     _mm_clflush(&data);
@@ -44,6 +46,7 @@ __clflush_(const _DataType &data) {
 template <
     typename _DataType
 > requires (sizeof(_DataType) > 64)
+[[clang::always_inline]]
 inline void
 __clflush_(const _DataType &data) {
     __clflush_range(data, 1);
@@ -52,6 +55,7 @@ __clflush_(const _DataType &data) {
 template <
     typename _DataType
 > requires is_unique_ptr_v<_DataType>
+[[clang::always_inline]]
 inline void
 __clflush_(const _DataType &data) {
     __clflush_(*(data.get()));
@@ -60,6 +64,7 @@ __clflush_(const _DataType &data) {
 template <
     typename _DataType
 > requires is_unique_ptr_pair_v<_DataType>
+[[clang::always_inline]]
 inline void
 __clflush_(const _DataType &data) {
     __clflush_(data.second);
@@ -69,6 +74,7 @@ __clflush_(const _DataType &data) {
 template <
     typename _Iterator
 >
+[[clang::always_inline]]
 inline void
 __clflush_iter(const _Iterator &begin,
                const _Iterator &end) {
@@ -96,6 +102,7 @@ clflush_container(const _ContainerType &container) {
 template <
     typename _Iterator
 >
+[[clang::always_inline]]
 inline void
 __clflush_array(const _Iterator &begin,
                 const std::size_t &count) {
@@ -105,10 +112,11 @@ __clflush_array(const _Iterator &begin,
 template <
     typename _Iterator
 > requires is_unique_ptr_v<typename std::iterator_traits<_Iterator>::value_type>
+[[clang::always_inline]]
 inline void
 __clflush_array(const _Iterator &begin,
                 const std::size_t &count) {
-    __clflush_iter(begin, std::next(begin, count));
+    __clflush_iter(begin, std::next(begin, (long)count));
     __clflush_range(*begin, count);
 }
 

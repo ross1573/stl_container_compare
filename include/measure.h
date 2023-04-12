@@ -59,7 +59,8 @@ template <
         class _Container
 >
 void
-measure(std::size_t iteration, duration_map &times)
+measure([[maybe_unused]] std::size_t iteration,
+        [[maybe_unused]] duration_map &times)
 {
     /* End of recursion */
 }

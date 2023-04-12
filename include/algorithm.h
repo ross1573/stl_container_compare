@@ -16,6 +16,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 >
+[[clang::always_inline]]
 inline void
 __insert_(_ContainerType &container,
           const std::vector<std::size_t> &order,
@@ -31,9 +32,10 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires map_like<_DataType, _Container>
+[[clang::always_inline]]
 inline void
 __insert_(_ContainerType &container,
-          const std::vector<std::size_t> &order,
+          [[maybe_unused]] const std::vector<std::size_t> &order,
           const std::size_t idx)
 {
     container.emplace(idx, create_instance<_DataType>(idx));
@@ -53,7 +55,7 @@ insert(_ContainerType &container,
     duration dur(0);
     container = _ContainerType();
     
-    for (int i = 0; i < order.size(); i++) {
+    for (std::size_t i = 0; i < order.size(); i++) {
         clflush_container<_DataType, _Container>(container);
         START_TIMER
         __insert_<_DataType, _Container>(container, order, i);
@@ -72,6 +74,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 >
+[[clang::always_inline]]
 inline void
 __push_back(_ContainerType &container,
             const std::size_t idx)
@@ -92,7 +95,7 @@ push_back(_ContainerType &container,
     duration dur(0);
     container = _ContainerType();
     
-    for (int i = 0; i < iteration_value; i++) {
+    for (std::size_t i = 0; i < iteration_value; i++) {
         clflush_container<_DataType, _Container>(container);
         START_TIMER
         __push_back<_DataType, _Container>(container, i);
@@ -111,6 +114,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 >
+[[clang::always_inline]]
 inline void
 __push_front(_ContainerType &container,
              const std::size_t idx)
@@ -124,6 +128,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires std::is_same_v<_ContainerType, container_type_t<_DataType, std::vector>>
+[[clang::always_inline]]
 inline void
 __push_front(_ContainerType &container,
              const std::size_t idx)
@@ -144,7 +149,7 @@ push_front(_ContainerType &container,
     duration dur(0);
     container = _ContainerType();
     
-    for (int i = 0; i < iteration_value; i++) {
+    for (std::size_t i = 0; i < iteration_value; i++) {
         clflush_container<_DataType, _Container>(container);
         START_TIMER
         __push_front<_DataType, _Container>(container, i);
@@ -163,6 +168,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 >
+[[clang::always_inline]]
 inline typename _ContainerType::const_iterator
 __find_(const _ContainerType &container,
         const std::size_t idx)
@@ -180,6 +186,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires (std::is_pointer_v<_DataType> && !map_like<_DataType, _Container>)
+[[clang::always_inline]]
 inline typename _ContainerType::const_iterator
 __find_(const _ContainerType &container,
         const std::size_t idx)
@@ -198,6 +205,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires map_like<_DataType, _Container>
+[[clang::always_inline]]
 inline typename _ContainerType::const_iterator
 __find_(const _ContainerType &container,
         const std::size_t idx)
@@ -217,7 +225,7 @@ find(const _ContainerType &container,
     std::vector<typename _ContainerType::const_iterator> iters;
     duration dur(0);
     
-    for (int i = 0; i < idx.size(); i++) {
+    for (std::size_t i = 0; i < idx.size(); i++) {
         clflush_container<_DataType, _Container>(container);
         START_TIMER
         auto iter = __find_<_DataType, _Container>(container, idx[i]);
@@ -237,6 +245,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 >
+[[clang::always_inline]]
 inline void
 __iteration_(const _ContainerType &container,
              std::size_t &sum) {
@@ -253,6 +262,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires (!std::is_pointer_v<_DataType> && map_like<_DataType, _Container>)
+[[clang::always_inline]]
 inline void
 __iteration_(const _ContainerType &container,
              std::size_t &sum) {
@@ -269,6 +279,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires (std::is_pointer_v<_DataType> && !map_like<_DataType, _Container>)
+[[clang::always_inline]]
 inline void
 __iteration_(const _ContainerType &container,
              std::size_t &sum) {
@@ -285,6 +296,7 @@ template <
         class _Container,
     class _ContainerType = container_type_t<_DataType, _Container>
 > requires (std::is_pointer_v<_DataType> && map_like<_DataType, _Container>)
+[[clang::always_inline]]
 inline void
 __iteration_(const _ContainerType &container,
              std::size_t &sum) {

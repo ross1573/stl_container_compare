@@ -9,6 +9,7 @@ template <
     typename _DataType,
     typename... _Args
 >
+[[clang::always_inline]]
 inline _DataType
 create_instance(const _Args& ...args)
 {
@@ -19,6 +20,7 @@ template <
     typename _DataType,
     typename... _Args
 > requires std::is_pointer_v<_DataType>
+[[clang::always_inline]]
 inline std::unique_ptr<std::remove_pointer_t<_DataType>>
 create_instance(const _Args& ...args)
 {
@@ -33,7 +35,7 @@ random_range(std::size_t iteration)
     std::random_device rd;
     std::mt19937 gen(rd());
     
-    for (int i = 0; i < iteration; i++) {
+    for (std::size_t i = 0; i < iteration; i++) {
         std::uniform_int_distribution<std::size_t> dis(0, i);
         vec[i] = dis(gen);
     }
@@ -49,7 +51,7 @@ random(std::size_t size)
     std::mt19937 gen(rd());
     std::uniform_int_distribution<std::size_t> dis(0, size);
     
-    for (int i = 0; i < size; i++) {
+    for (std::size_t i = 0; i < size; i++) {
         vec[i] = dis(gen);
     }
     
@@ -60,6 +62,7 @@ random(std::size_t size)
 template <
     typename _T
 >
+[[clang::always_inline]]
 inline void
 print_sizeof()
 {
@@ -70,6 +73,7 @@ template <
     typename _1,
     typename... _T
 > requires (sizeof...(_T) > 0)
+[[clang::always_inline]]
 inline void
 print_sizeof()
 {
